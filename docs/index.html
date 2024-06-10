@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular App Anleitung</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    button.copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Schritt-für-Schritt-Anleitung zur Erstellung einer Angular-Anwendung</h1>
+
+  <h2>Voraussetzungen</h2>
+  <ul>
+    <li>
+      <strong>Node.js</strong>: Installieren Sie Node.js von <a href="https://nodejs.org/">nodejs.org</a>. Überprüfen Sie die Installation mit:
+      <pre><code id="code1">node -v
+npm -v</code><button class="copy-btn" onclick="copyCode('code1')">Copy</button></pre>
+    </li>
+    <li>
+      <strong>Angular CLI</strong>: Installieren Sie Angular CLI mit:
+      <pre><code id="code2">npm install -g @angular/cli</code><button class="copy-btn" onclick="copyCode('code2')">Copy</button></pre>
+    </li>
+  </ul>
+
+  <h2>Schritt 1: Eine neue Angular-Anwendung erstellen</h2>
+  <ol>
+    <li>Öffnen Sie das Terminal und navigieren Sie zu dem gewünschten Verzeichnis.</li>
+    <li>
+      Erstellen Sie ein neues Projekt:
+      <pre><code id="code3">ng new todo-app</code><button class="copy-btn" onclick="copyCode('code3')">Copy</button></pre>
+    </li>
+    <li>Beantworten Sie die Fragen des Angular CLI (z.B. CSS als Stil).</li>
+  </ol>
+
+  <h2>Schritt 2: Die Anwendung starten</h2>
+  <ol>
+    <li>
+      Navigieren Sie in das neu erstellte Verzeichnis:
+      <pre><code id="code4">cd todo-app</code><button class="copy-btn" onclick="copyCode('code4')">Copy</button></pre>
+    </li>
+    <li>
+      Starten Sie die Anwendung:
+      <pre><code id="code5">ng serve</code><button class="copy-btn" onclick="copyCode('code5')">Copy</button></pre>
+    </li>
+    <li>Öffnen Sie einen Browser und gehen Sie zu <a href="http://localhost:4200">http://localhost:4200</a>.</li>
+  </ol>
+
+  <h2>Schritt 3: HTML und CSS hinzufügen</h2>
+  <ol>
+    <li>
+      Öffnen Sie <code>src/app/app.component.html</code> und fügen Sie folgendes HTML hinzu:
+      <pre><code id="code6">&lt;div class="container"&gt;
+  &lt;form&gt;
+    &lt;div class="form-group"&gt;
+      &lt;h1 class="text-center text-primary"&gt;Todo App&lt;/h1&gt;
+      &lt;div class="input-group-prepend"&gt;
+        &lt;input type="text" class="form-control" placeholder="Add Todo" name="todo"&gt;
+        &lt;span class="input-group-text"&gt;Add&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode('code6')">Copy</button></pre>
+    </li>
+    <li>
+      Öffnen Sie <code>src/app/app.component.css</code> und fügen Sie folgendes CSS hinzu:
+      <pre><code id="code7">body { padding: 0; margin: 0; }
+form { max-width: 25em; margin: 1em auto; }</code><button class="copy-btn" onclick="copyCode('code7')">Copy</button></pre>
+    </li>
+  </ol>
+
+  <h2>Schritt 4: Daten erfassen und anzeigen</h2>
+  <ol>
+    <li>
+      Bearbeiten Sie <code>src/app/app.component.ts</code>, um ein Array zu erstellen und Eingaben zu erfassen:
+      <pre><code id="code8">export class AppComponent {
+  todoArray = [];
+  addTodo(value: string) {
+    if (value) this.todoArray.push(value);
+  }
+}</code><button class="copy-btn" onclick="copyCode('code8')">Copy</button></pre>
+    </li>
+    <li>
+      Aktualisieren Sie <code>app.component.html</code>, um die Eingaben zu erfassen und anzuzeigen:
+      <pre><code id="code9">&lt;div class="container"&gt;
+  &lt;form (ngSubmit)="addTodo()"&gt;
+    &lt;div class="form-group"&gt;
+      &lt;h1 class="text-center text-primary"&gt;Todo App&lt;/h1&gt;
+      &lt;div class="input-group-prepend"&gt;
+        &lt;input type="text" #todoInput class="form-control" placeholder="Add Todo" (ngModel)="todoInput.value"&gt;
+        &lt;span class="input-group-text" (click)="addTodo(todoInput.value)"&gt;Add&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li *ngFor="let todo of todoArray"&gt;{{ todo }}&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode('code9')">Copy</button></pre>
+    </li>
+  </ol>
+
+  <h2>Schritt 5: Löschen von Einträgen</h2>
+  <ol>
+    <li>
+      Fügen Sie eine Methode zum Löschen hinzu in <code>app.component.ts</code>:
+      <pre><code id="code10">deleteItem(todo: string) {
+  this.todoArray = this.todoArray.filter(item => item !== todo);
+}</code><button class="copy-btn" onclick="copyCode('code10')">Copy</button></pre>
+    </li>
+    <li>
+      Aktualisieren Sie <code>app.component.html</code>:
+      <pre><code id="code11">&lt;li *ngFor="let todo of todoArray"&gt;
+  {{ todo }}
+  &lt;i class="material-icons" (click)="deleteItem(todo)"&gt;delete&lt;/i&gt;
+&lt;/li&gt;</code><button class="copy-btn" onclick="copyCode('code11')">Copy</button></pre>
+    </li>
+  </ol>
+
+  <script>
+    function copyCode(id) {
+        var code = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(code).then(function() {
+            alert('Code kopiert!');
+        }, function(err) {
+            alert('Fehler beim Kopieren des Codes: ', err);
+        });
+    }
+  </script>
+
+</body>
+</html>
